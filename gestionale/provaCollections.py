@@ -1,9 +1,8 @@
 import copy
 from enum import nonmember
+from collections import Counter
 
-from gestionale.core.clienti import ClienteRecord
 from gestionale.core.prodotti import ProdottoRecord
-from gestionale.vendite.ordini import Ordine
 
 p1 = ProdottoRecord("Laptop", 1200.0)
 p2 = ProdottoRecord("Mouse", 20.0)
@@ -111,8 +110,8 @@ s.add(ProdottoRecord("aaa", 20.0)) #aggiunge un elemento
 s.update([ProdottoRecord("aaa", 20.0), ProdottoRecord("bbb", 20.0)]) #aggiungo più elementi
 
 #togliere
-#s.remove(elem) #rimuove un elemento. Raise KeyError se non esiste.
-#s.discard(elem) #rimuove un elemento, senza "arrabbiarsi" se questo non esiste.
+s.remove(elem) #rimuove un elemento. Raise KeyError se non esiste.
+s.discard(elem) #rimuove un elemento, senza "arrabbiarsi" se questo non esiste.
 s.pop() #rimuove e restituisce un elemento.
 s.clear()
 
@@ -127,77 +126,3 @@ s1.issuperset(s) # se gli elementi di s sono contenuti in s1
 s1.isdisjoint(s) # se gli elementi di s e quelli di s1 sono diversi
 
 #Dictionary
-catalogo={
-    "LAP001":ProdottoRecord("Laptop", 1200.0),
-    "LAP002":ProdottoRecord("LaptopPro", 2300.0),
-    "MAU001":ProdottoRecord("Mouse", 20.0),
-    "AUR001":ProdottoRecord("Auricolari", 250.0),
-}
-
-cod="LAP002"
-prod=catalogo[cod]
-
-print(f"Il prodotto con codice {cod} è {prod}")
-
-#print(f"Cerco un altro oggetto: {catalogo["NonEsiste!"]}")
-
-prod1=catalogo.get("NonEsiste!")
-
-if prod1 is None:
-    print(f"Prodotto non trovato")
-
-prod2=catalogo.get("NonEsiste!",ProdottoRecord("Sconosciuto", 0.0))
-print(prod2)
-
-keys = catalogo.keys()
-values=catalogo.values()
-
-for k in keys:
-    print(k)
-
-for v in values:
-    print(v)
-
-for key,val in catalogo.items():
-    print(f"Cod {key} è associato a {val}")
-
-#rimuovere dal dizionario
-rimosso=catalogo.pop("LAP002")
-print(rimosso)
-
-#dict comprehension
-prezzi={codice:prod.prezzo_unitario for codice,prod in catalogo.items()}
-
-#DA RICORDARE PER DICT
-#v=d[key] #leggere -- restituisce key error se non esiste
-#v=d.get(key,default) #legge senza rischiare KeyError -- se non esiste restituisce default
-#d.pop(key) #restituisce un valore e lo cancella dal dizionario
-#d.clear() #Svuota il dizionario
-#d.keys() #restituisce le chiavi
-#d.values() #restituisce i valori
-#d.items() #restituisce le coppie
-#key in d #condizione che verifica se key è presente nel diz
-
-""" Esercizio live
-Per ciuscuno dei seguenti casi decidere quale struttura usare:"""
-""""
-1) Memorizzare un elenco di ordini che dovranno poi essere processati in ordine di arrivo"""
-#Lista
-ordini_da_processare=[]
-o1=Ordine([],ClienteRecord("Mario Rossi", "mario@polito.it","Gold"))
-o2=Ordine([], ClienteRecord("Mario Bianchi", ))
-
-"""    
-    
-2) Memorizzare i CF dei clienti (univoco)
-    set
-    
-3) Creare un database di prodotti che posso cercare con un codice univoco
-    dizionario
-    
-4) Memorizzare le coordinate gps della nuova sede di Roma
-    tupla
-    
-5) Tenere traccia della categoria di clienti che hanno fatto un ordine in un certo range temporale"""
-
-
